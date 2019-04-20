@@ -1,12 +1,12 @@
 {
-  "name": "laravel/laravel",
+  "name": "luc/forum",
   "type": "project",
-  "description": "The Laravel Framework.",
+  "description": "Life Under Clouds - Forum",
   "keywords": [
-    "framework",
-    "laravel"
+    "luc",
+    "forum"
   ],
-  "license": "MIT",
+  "license": "",
   "require": {
     "php": "^7.1.3",
     "fideloper/proxy": "^4.0",

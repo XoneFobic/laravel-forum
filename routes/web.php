@@ -1,10 +1,10 @@
 <?php declare( strict_types = 1 );
 
+Auth::routes();
+
 Route::get( '/', function () {
   return view( 'welcome' );
 } );
-
-Auth::routes();
 
 Route::get( '/home', 'HomeController@index' );
 Route::get( '/threads', 'ThreadsController@index' );

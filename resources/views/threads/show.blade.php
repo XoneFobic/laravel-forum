@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-12 col-lg-10">
         <div class="card mb-5">
           <div class="card-header">
             <a href="{{ $thread->creator->path() }}">{{ $thread->creator->name }}</a> posted: {{ $thread->title }}
@@ -16,7 +16,7 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-12 col-lg-10">
         @foreach($thread->replies as $reply)
           @include('threads.reply')
         @endforeach
@@ -25,7 +25,7 @@
 
     @if(auth()->check())
       <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 col-lg-10">
           <form action="{{ $thread->path() . '/replies' }}" method="POST">
             @csrf()
             <div class="form-group">

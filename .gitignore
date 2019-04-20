@@ -1,8 +1,9 @@
 .env
 .phpunit.result.cache
+/_ide_helper.php
+/.DS_Store
 /.idea
 /.phpstorm.meta.php
-/_ide_helper.php
 /node_modules
 /public/hot
 /public/storage
