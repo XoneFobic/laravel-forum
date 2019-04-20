@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 /**
@@ -14,8 +15,14 @@ abstract class TestCase extends BaseTestCase {
 
   /**
    * @param \App\User $user
+   *
+   * @return \Tests\TestCase
    */
-  public function signIn ( $user ) {
-    $this->be( $user );
+  protected function signIn ( $user = null ) {
+    $user = $user ?: create( User::class );
+
+    $this->actingAs( $user );
+
+    return $this;
   }
 }

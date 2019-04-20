@@ -6,17 +6,14 @@ use App\Reply;
 use App\Thread;
 use App\User;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
+use Tests\DatabaseTestCase;
 
 /**
  * Class ParticipateInForumTest
  *
  * @package Tests\Feature
  */
-class ParticipateInForumTest extends TestCase {
-  use DatabaseMigrations;
-
+class ParticipateInForumTest extends DatabaseTestCase {
   /** @test */
   function an_unauthenticated_user_may_not_participate_in_forum_threads () {
     $this->expectException( AuthenticationException::class );
@@ -27,13 +24,13 @@ class ParticipateInForumTest extends TestCase {
   /** @test */
   function an_authenticated_user_may_participate_in_forum_threads () {
     /** @var User $user */
-    $this->signIn( $user = factory( User::class )->create() );
+    $this->signIn( $user = create( User::class ) );
 
     /** @var Thread $thread */
-    $thread = factory( Thread::class )->create();
+    $thread = create( Thread::class );
 
     /** @var Reply $reply */
-    $reply = factory( Reply::class )->make();
+    $reply = make( Reply::class );
 
     $this->post( $thread->path() . '/replies', $reply->toArray() );
 

@@ -3,31 +3,27 @@
 namespace Tests\Feature;
 
 use App\Thread;
-use App\User;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
+use Tests\DatabaseTestCase;
 
 /**
  * Class CreateThreadsTest
  *
  * @package Tests\Feature
  */
-class CreateThreadsTest extends TestCase {
-  use DatabaseMigrations;
-
+class CreateThreadsTest extends DatabaseTestCase {
   /** @test */
   function a_guest_may_not_create_threads () {
     $this->expectException( AuthenticationException::class );
-    $this->post( '/threads', factory( Thread::class )->raw() );
+    $this->post( '/threads', raw( Thread::class ) );
   }
 
   /** @test */
   function an_authenticated_user_can_create_new_forum_threads () {
-    $this->signIn( factory( User::class )->create() );
+    $this->signIn();
 
     /** @var Thread $thread */
-    $thread = factory( Thread::class )->make();
+    $thread = make( Thread::class );
 
     $this->post( '/threads', $thread->toArray() );
 
