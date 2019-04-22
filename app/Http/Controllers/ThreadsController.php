@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Channel;
 use App\Thread;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,8 +41,15 @@ class ThreadsController extends Controller {
    * Store a newly created resource in storage.
    *
    * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+   * @throws \Illuminate\Validation\ValidationException
    */
   public function store (): RedirectResponse {
+    $this->validate( request(), [
+      'title' => [ 'required' ],
+      'body' => [ 'required' ],
+      'channel_id' => [ 'required', 'exists:channels,id' ]
+    ] );
+
     $thread = Thread::create( [
       'user_id' => auth()->id(),
       'channel_id' => request( 'channel_id' ),

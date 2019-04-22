@@ -35,4 +35,19 @@ class ParticipateInForumTest extends DatabaseTestCase {
 
     $this->get( $thread->path() )->assertSee( $reply->body );
   }
+
+  /** @test */
+  function a_reply_requires_a_body () {
+    /** @var User $user */
+    $this->withExceptionHandling()->signIn( $user = create( User::class ) );
+
+    /** @var Thread $thread */
+    $thread = create( Thread::class );
+
+    /** @var Reply $reply */
+    $reply = make( Reply::class, [ 'body' => null ] );
+
+    $this->post( $thread->path() . '/replies', $reply->toArray() )
+      ->assertSessionHasErrors( 'body' );
+  }
 }

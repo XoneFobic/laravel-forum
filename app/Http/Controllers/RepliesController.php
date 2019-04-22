@@ -1,4 +1,4 @@
-<?php declare( strict_types = 1 );
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -11,8 +11,8 @@ use Illuminate\Http\RedirectResponse;
  * @package App\Http\Controllers
  */
 class RepliesController extends Controller {
-  public function __construct () {
-    $this->middleware( 'auth' );
+  public function __construct() {
+    $this->middleware('auth');
   }
 
   /**
@@ -22,12 +22,17 @@ class RepliesController extends Controller {
    * @param \App\Thread $thread
    *
    * @return \Illuminate\Http\RedirectResponse
+   * @throws \Illuminate\Validation\ValidationException
    */
-  public function store ($channelId, Thread $thread ): RedirectResponse {
-    $thread->addReply( [
-      'body' => request( 'body' ),
+  public function store($channelId, Thread $thread): RedirectResponse {
+    $this->validate(request(), [
+      'body' => ['required']
+    ]);
+
+    $thread->addReply([
+      'body' => request('body'),
       'user_id' => auth()->id()
-    ] );
+    ]);
 
     return back();
   }
