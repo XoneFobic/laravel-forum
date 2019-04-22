@@ -17,7 +17,6 @@ class Handler extends ExceptionHandler {
    * @var array
    */
   protected $dontReport = [];
-
   /**
    * A list of the inputs that are never flashed for validation exceptions.
    *
@@ -35,10 +34,6 @@ class Handler extends ExceptionHandler {
    * @throws \Exception
    */
   public function render ( $request, Exception $exception ) {
-    if (app()->environment() === 'testing') {
-      throw $exception;
-    }
-
     return parent::render( $request, $exception );
   }
 

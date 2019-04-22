@@ -1,13 +1,11 @@
 <?php declare( strict_types = 1 );
 
+// Standard Laravel Authentication
 Auth::routes();
 
-Route::get( '/', function () {
-  return view( 'welcome' );
-} );
+// Home
+Route::get( '/', 'HomeController@index' );
 
-Route::get( '/home', 'HomeController@index' );
-Route::get( '/threads', 'ThreadsController@index' );
-Route::post( '/threads', 'ThreadsController@store' );
-Route::get( '/threads/{thread}', 'ThreadsController@show' );
+// Threads
+Route::resource( '/threads', 'ThreadsController' );
 Route::post( '/threads/{thread}/replies', 'RepliesController@store' );
