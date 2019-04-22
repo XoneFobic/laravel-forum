@@ -18,11 +18,12 @@ class RepliesController extends Controller {
   /**
    * Store a newly created resource in storage.
    *
+   * @param $channelId
    * @param \App\Thread $thread
    *
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function store ( Thread $thread ): RedirectResponse {
+  public function store ($channelId, Thread $thread ): RedirectResponse {
     $thread->addReply( [
       'body' => request( 'body' ),
       'user_id' => auth()->id()

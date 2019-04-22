@@ -4,20 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
- * Class CreateRepliesTable
+ * Class CreateChannelsTable
  */
-class CreateRepliesTable extends Migration {
+class CreateChannelsTable extends Migration {
   /**
    * Run the migrations.
    *
    * @return void
    */
   public function up () {
-    Schema::create( 'replies', function ( Blueprint $table ) {
+    Schema::create( 'channels', function ( Blueprint $table ) {
       $table->bigIncrements( 'id' );
-      $table->unsignedBigInteger( 'thread_id' );
-      $table->unsignedBigInteger( 'user_id' );
-      $table->text( 'body' );
+      $table->string( 'name', 50 );
+      $table->string( 'slug', 50 );
       $table->timestamps();
     } );
   }
@@ -28,6 +27,6 @@ class CreateRepliesTable extends Migration {
    * @return void
    */
   public function down () {
-    Schema::dropIfExists( 'replies' );
+    Schema::dropIfExists( 'channels' );
   }
 }

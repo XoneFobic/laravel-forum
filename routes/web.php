@@ -4,8 +4,13 @@
 Auth::routes();
 
 // Home
-Route::get( '/', 'HomeController@index' );
+Route::get( '/home', 'HomeController@index' );
 
 // Threads
-Route::resource( '/threads', 'ThreadsController' );
-Route::post( '/threads/{thread}/replies', 'RepliesController@store' );
+Route::group( [ 'prefix' => '/threads' ], function () {
+  Route::get( '/', 'ThreadsController@index' );
+  Route::get( '/create', 'ThreadsController@create' );
+  Route::get( '/{channel}/{thread}', 'ThreadsController@show' );
+  Route::post( '/', 'ThreadsController@store' );
+  Route::post( '/{channel}/{thread}/replies', 'RepliesController@store' );
+} );

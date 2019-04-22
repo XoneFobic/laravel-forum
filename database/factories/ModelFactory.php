@@ -1,5 +1,6 @@
 <?php declare( strict_types = 1 );
 
+use App\Channel;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -24,6 +25,9 @@ $factory->define( Thread::class, function ( Faker $faker ) {
     'user_id' => function () {
       return factory( User::class )->create()->id;
     },
+    'channel_id' => function () {
+      return factory( Channel::class )->create()->id;
+    },
     'title' => $faker->sentence,
     'body' => $faker->paragraph
   ];
@@ -38,5 +42,14 @@ $factory->define( Reply::class, function ( Faker $faker ) {
       return factory( User::class )->create()->id;
     },
     'body' => $faker->paragraph
+  ];
+} );
+
+$factory->define( Channel::class, function ( Faker $faker ) {
+  $name = $faker->unique()->word;
+
+  return [
+    'name' => $name,
+    'slug' => Str::slug( $name )
   ];
 } );

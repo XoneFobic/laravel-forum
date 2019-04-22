@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Thread;
-use Illuminate\Auth\AuthenticationException;
 use Tests\DatabaseTestCase;
 
 /**
@@ -14,14 +13,12 @@ use Tests\DatabaseTestCase;
 class CreateThreadsTest extends DatabaseTestCase {
   /** @test */
   function a_guest_may_not_create_threads () {
-    $this->expectException( AuthenticationException::class );
-    $this->post( '/threads', raw( Thread::class ) );
-  }
+    $this->withExceptionHandling();
 
-  /** @test */
-  function a_guest_may_not_see_the_create_thread_page () {
-    $this->withExceptionHandling()
-      ->get( '/threads/create' )
+    $this->get( '/threads/create' )
+      ->assertRedirect( '/login' );
+
+    $this->post( '/threads' )
       ->assertRedirect( '/login' );
   }
 
@@ -30,7 +27,7 @@ class CreateThreadsTest extends DatabaseTestCase {
     $this->signIn();
 
     /** @var Thread $thread */
-    $thread = make( Thread::class );
+    $thread = create( Thread::class );
 
     $this->post( '/threads', $thread->toArray() );
 

@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Reply;
 use App\Thread;
 use App\User;
-use Illuminate\Auth\AuthenticationException;
 use Tests\DatabaseTestCase;
 
 /**
@@ -16,9 +15,9 @@ use Tests\DatabaseTestCase;
 class ParticipateInForumTest extends DatabaseTestCase {
   /** @test */
   function an_unauthenticated_user_may_not_participate_in_forum_threads () {
-    $this->expectException( AuthenticationException::class );
-
-    $this->post( 'threads/1/replies', [] );
+    $this->withExceptionHandling()
+      ->post( 'threads/foobar/1/replies', [] )
+      ->assertRedirect( '/login' );
   }
 
   /** @test */
