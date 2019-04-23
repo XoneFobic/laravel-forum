@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
 use App\Thread;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,10 +21,12 @@ class ThreadsController extends Controller {
   /**
    * Display a listing of the resource.
    *
+   * @param \App\Channel $channel
+   *
    * @return \Illuminate\View\View
    */
-  public function index (): View {
-    $threads = Thread::latest()->get();
+  public function index ( Channel $channel ): View {
+    $threads = $channel->exists ? $channel->threads()->latest()->get() : Thread::latest()->get();
 
     return view( 'threads.index', compact( 'threads' ) );
   }

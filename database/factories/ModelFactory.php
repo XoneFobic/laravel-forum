@@ -46,10 +46,10 @@ $factory->define( Reply::class, function ( Faker $faker ) {
 } );
 
 $factory->define( Channel::class, function ( Faker $faker ) {
-  $name = $faker->unique()->words( 4 );
+  $name = $faker->word;
 
   return [
     'name' => $name,
-    'slug' => Str::slug( $name )
+    'slug' => $name
   ];
 } );

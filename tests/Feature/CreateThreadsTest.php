@@ -13,18 +13,16 @@ use Tests\DatabaseTestCase;
  */
 class CreateThreadsTest extends DatabaseTestCase {
   /** @test */
-  function a_guest_may_not_create_threads () {
+  public function a_guest_may_not_create_threads (): void {
     $this->withExceptionHandling();
 
-    $this->get( '/threads/create' )
-      ->assertRedirect( '/login' );
+    $this->get( '/threads/create' )->assertRedirect( '/login' );
 
-    $this->post( '/threads' )
-      ->assertRedirect( '/login' );
+    $this->post( '/threads' )->assertRedirect( '/login' );
   }
 
   /** @test */
-  function an_authenticated_user_can_create_new_forum_threads () {
+  public function an_authenticated_user_can_create_new_forum_threads (): void {
     $this->signIn();
 
     /** @var Thread $thread */
@@ -38,9 +36,8 @@ class CreateThreadsTest extends DatabaseTestCase {
   }
 
   /** @test */
-  function a_thread_requires_a_title () {
-    $this->publishThread( [ 'title' => null ] )
-      ->assertSessionHasErrors( 'title' );
+  public function a_thread_requires_a_title (): void {
+    $this->publishThread( [ 'title' => null ] )->assertSessionHasErrors( 'title' );
   }
 
   /**
@@ -57,19 +54,15 @@ class CreateThreadsTest extends DatabaseTestCase {
   }
 
   /** @test */
-  function a_thread_requires_a_body () {
-    $this->publishThread( [ 'body' => null ] )
-      ->assertSessionHasErrors( 'body' );
+  public function a_thread_requires_a_body (): void {
+    $this->publishThread( [ 'body' => null ] )->assertSessionHasErrors( 'body' );
   }
 
   /** @test */
-  function a_thread_requires_a_valid_channel () {
+  public function a_thread_requires_a_valid_channel (): void {
     factory( Channel::class, 2 )->create();
 
-    $this->publishThread( [ 'channel_id' => null ] )
-      ->assertSessionHasErrors( 'channel_id' );
-
-    $this->publishThread( [ 'channel_id' => 999 ] )
-      ->assertSessionHasErrors( 'channel_id' );
+    $this->publishThread( [ 'channel_id' => null ] )->assertSessionHasErrors( 'channel_id' );
+    $this->publishThread( [ 'channel_id' => 999 ] )->assertSessionHasErrors( 'channel_id' );
   }
 }

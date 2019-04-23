@@ -14,14 +14,14 @@ use Tests\DatabaseTestCase;
  */
 class ParticipateInForumTest extends DatabaseTestCase {
   /** @test */
-  function an_unauthenticated_user_may_not_participate_in_forum_threads () {
+  public function an_unauthenticated_user_may_not_participate_in_forum_threads (): void {
     $this->withExceptionHandling()
       ->post( 'threads/foobar/1/replies', [] )
       ->assertRedirect( '/login' );
   }
 
   /** @test */
-  function an_authenticated_user_may_participate_in_forum_threads () {
+  public function an_authenticated_user_may_participate_in_forum_threads (): void {
     /** @var User $user */
     $this->signIn( $user = create( User::class ) );
 
@@ -37,7 +37,7 @@ class ParticipateInForumTest extends DatabaseTestCase {
   }
 
   /** @test */
-  function a_reply_requires_a_body () {
+  public function a_reply_requires_a_body (): void {
     /** @var User $user */
     $this->withExceptionHandling()->signIn( $user = create( User::class ) );
 
