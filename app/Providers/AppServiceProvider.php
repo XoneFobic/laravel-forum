@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Channel;
 use Illuminate\Support\ServiceProvider;
+use View;
 
 /**
  * Class AppServiceProvider
@@ -24,5 +26,6 @@ class AppServiceProvider extends ServiceProvider {
    * @return void
    */
   public function boot () {
+    View::share( 'channels', Channel::all() );
   }
 }
