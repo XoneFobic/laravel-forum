@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Channel;
+use App\Filters\ThreadsFilter;
 use App\Thread;
-use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -23,19 +23,14 @@ class ThreadsController extends Controller {
    *
    * @param \App\Channel $channel
    *
+   * @param \App\Filters\ThreadsFilter $filters
+   *
    * @return \Illuminate\View\View
    */
-  public function index ( Channel $channel ): View {
+  public function index ( Channel $channel, ThreadsFilter $filters ): View {
     /** @var Thread $threads */
     $threads = $channel->exists ? $channel->threads()->latest() : Thread::latest();
-
-    if ($username = request( 'by' )) {
-      /** @var User $user */
-      $user = User::where( 'name', $username )->firstOrFail();
-      $threads->where( 'user_id', $user->id );
-    }
-
-    $threads = $threads->get();
+    $threads = $threads->filter( $filters )->get();
 
     return view( 'threads.index', compact( 'threads' ) );
   }

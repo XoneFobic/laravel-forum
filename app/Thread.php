@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Channel $channel
  * @property-read \App\User $creator
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Reply[] $replies
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Thread filter( $filters )
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Thread newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Thread newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Thread query()
@@ -75,5 +76,15 @@ class Thread extends Model {
    */
   public function channel () {
     return $this->belongsTo( Channel::class );
+  }
+
+  /**
+   * @param $query
+   * @param \App\Filters\ThreadsFilter $filters
+   *
+   * @return mixed
+   */
+  public function scopeFilter ( $query, $filters ) {
+    return $filters->apply( $query );
   }
 }
