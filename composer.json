@@ -53,6 +53,15 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
+    "docs": [
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+      "php artisan ide-helper:generate",
+      "php artisan ide-helper:meta"
+    ],
+    "models": [
+      "php composer.phar docs",
+      "php artisan ide-helper:models -RW"
+    ],
     "post-autoload-dump": [
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
       "@php artisan package:discover --ansi"
@@ -63,14 +72,11 @@
     "post-create-project-cmd": [
       "@php artisan key:generate --ansi"
     ],
-    "docs": [
-      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "php artisan ide-helper:generate",
-      "php artisan ide-helper:meta"
+    "test": [
+      "php phpunit.phar"
     ],
-    "models": [
-      "php composer.phar docs",
-      "php artisan ide-helper:models -RW"
+    "test-coverage": [
+      "php phpunit.phar --coverage-html \"./tests/coverage-report\" --coverage-clover \"./tests/coverage-report/clover.xml\""
     ]
   }
 }

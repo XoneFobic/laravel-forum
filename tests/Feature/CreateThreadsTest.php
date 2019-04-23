@@ -22,6 +22,12 @@ class CreateThreadsTest extends DatabaseTestCase {
   }
 
   /** @test */
+  public function an_authenticated_user_may_create_threads (): void {
+    $this->signIn()->get( '/threads/create' )
+      ->assertStatus( 200 );
+  }
+
+  /** @test */
   public function an_authenticated_user_can_create_new_forum_threads (): void {
     $this->signIn();
 

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Channel;
 use App\Reply;
 use App\Thread;
+use App\User;
 use Tests\DatabaseTestCase;
 
 /**
@@ -54,5 +55,21 @@ class ReadThreadsTest extends DatabaseTestCase {
     $this->get( "/threads/{$channel->slug}" )
       ->assertSee( $threadInChannel->title )
       ->assertDontSee( $threadNotInChannel->title );
+  }
+
+  /** @test */
+  public function an_user_can_filter_threads_by_any_username (): void {
+    $user = create( User::class, [ 'name' => 'JohnDoe' ] );
+    $this->signIn( $user );
+
+    /** @var Thread $threadByJohn */
+    $threadByJohn = create( Thread::class, [ 'user_id' => $user->id ] );
+
+    /** @var Thread $threadNotByJohn */
+    $threadNotByJohn = create( Thread::class );
+
+    $this->get( '/threads?by=JohnDoe' )
+      ->assertSee( $threadByJohn->title )
+      ->assertDontSee( $threadNotByJohn->title );
   }
 }

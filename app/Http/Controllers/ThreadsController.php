@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Thread;
+use App\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -26,7 +26,16 @@ class ThreadsController extends Controller {
    * @return \Illuminate\View\View
    */
   public function index ( Channel $channel ): View {
-    $threads = $channel->exists ? $channel->threads()->latest()->get() : Thread::latest()->get();
+    /** @var Thread $threads */
+    $threads = $channel->exists ? $channel->threads()->latest() : Thread::latest();
+
+    if ($username = request( 'by' )) {
+      /** @var User $user */
+      $user = User::where( 'name', $username )->firstOrFail();
+      $threads->where( 'user_id', $user->id );
+    }
+
+    $threads = $threads->get();
 
     return view( 'threads.index', compact( 'threads' ) );
   }
@@ -89,12 +98,11 @@ class ThreadsController extends Controller {
   /**
    * Update the specified resource in storage.
    *
-   * @param \Illuminate\Http\Request $request
    * @param \App\Thread $thread
    *
    * @return \Illuminate\Http\Response
    */
-  public function update ( Request $request, Thread $thread ) {
+  public function update ( Thread $thread ) {
     //
   }
 
