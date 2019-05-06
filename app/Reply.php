@@ -69,4 +69,11 @@ class Reply extends Model {
   public function favourites () {
     return $this->morphMany( Favourite::class, 'favourited' );
   }
+
+  /**
+   * @return bool
+   */
+  public function isFavourited (): bool {
+    return $this->favourites()->where( 'user_id', auth()->id() )->exists();
+  }
 }

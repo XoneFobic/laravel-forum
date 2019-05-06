@@ -22,6 +22,8 @@ class FavouritesController extends Controller {
    * @return \Illuminate\Database\Eloquent\Model|null
    */
   public function store ( Reply $reply ) {
-    return $reply->favourite( auth()->id() );
+    $reply->favourite( auth()->id() );
+
+    return back();
   }
 }
