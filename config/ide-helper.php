@@ -1,4 +1,4 @@
-<?php declare( strict_types = 1 );
+<?php declare(strict_types=1);
 
 return [
   /*
@@ -64,7 +64,7 @@ return [
 
   'include_helpers' => true,
 
-  'helper_files' => [ base_path() . '/vendor/laravel/framework/src/Illuminate/Support/helpers.php' ],
+  'helper_files' => [base_path() . '/vendor/laravel/framework/src/Illuminate/Support/helpers.php'],
 
   /*
   |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
   |
   */
 
-  'model_locations' => [ 'app' ],
+  'model_locations' => ['app'],
 
   /*
   |--------------------------------------------------------------------------
@@ -88,8 +88,8 @@ return [
   */
 
   'extra' => [
-    'Eloquent' => [ 'Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder' ],
-    'Session' => [ 'Illuminate\Session\Store' ]
+    'Eloquent' => ['Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder'],
+    'Session' => ['Illuminate\Session\Store']
   ],
 
   'magic' => [

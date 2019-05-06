@@ -1,4 +1,4 @@
-<?php declare( strict_types = 1 );
+<?php declare(strict_types=1);
 
 return [
   /*
@@ -14,7 +14,7 @@ return [
   |
   */
 
-  'default' => env( 'BROADCAST_DRIVER', 'null' ),
+  'default' => env('BROADCAST_DRIVER', 'null'),
 
   /*
   |--------------------------------------------------------------------------
@@ -30,11 +30,11 @@ return [
   'connections' => [
     'pusher' => [
       'driver' => 'pusher',
-      'key' => env( 'PUSHER_APP_KEY' ),
-      'secret' => env( 'PUSHER_APP_SECRET' ),
-      'app_id' => env( 'PUSHER_APP_ID' ),
+      'key' => env('PUSHER_APP_KEY'),
+      'secret' => env('PUSHER_APP_SECRET'),
+      'app_id' => env('PUSHER_APP_ID'),
       'options' => [
-        'cluster' => env( 'PUSHER_APP_CLUSTER' ),
+        'cluster' => env('PUSHER_APP_CLUSTER'),
         'encrypted' => true
       ]
     ],

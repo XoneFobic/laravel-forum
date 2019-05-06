@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $body
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Favourite[] $favourites
+ * @property-read int $favourites_count
  * @property-read \App\User $owner
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Reply newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Reply newQuery()
@@ -29,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class Reply extends Model {
+  use Favouritable;
   /**
    * The attributes that aren't mass assignable.
    *
@@ -37,43 +40,16 @@ class Reply extends Model {
   protected $guarded = [];
 
   /**
+   * The relations to eager load on every query.
+   *
+   * @var array
+   */
+  protected $with = [ 'owner', 'favourites' ];
+
+  /**
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */
   public function owner () {
     return $this->belongsTo( User::class, 'user_id' );
-  }
-
-  /**
-   * Favourite a reply
-   *
-   * @param int $userId
-   *
-   * @return \Illuminate\Database\Eloquent\Model|null
-   */
-  public function favourite ( int $userId ) {
-    $attributes = [ 'user_id' => $userId ];
-    if (
-    !$this->favourites()
-      ->where( $attributes )
-      ->exists()
-    ) {
-      return $this->favourites()->create( $attributes );
-    }
-
-    return null;
-  }
-
-  /**
-   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-   */
-  public function favourites () {
-    return $this->morphMany( Favourite::class, 'favourited' );
-  }
-
-  /**
-   * @return bool
-   */
-  public function isFavourited (): bool {
-    return $this->favourites()->where( 'user_id', auth()->id() )->exists();
   }
 }
