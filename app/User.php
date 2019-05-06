@@ -20,17 +20,18 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Thread[] $threads
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmailVerifiedAt( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereName( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt( $value )
  * @mixin \Eloquent
  */
 class User extends Authenticatable {
@@ -60,11 +61,28 @@ class User extends Authenticatable {
   ];
 
   /**
+   * Get the route key for the model.
+   *
+   * @return string
+   */
+  public function getRouteKeyName () {
+    return 'name';
+  }
+
+  /**
    * Return URL string for a specific user.
    *
    * @return string
    */
   public function path () {
-    return '/users/' . $this->id;
+    return '/profiles/' . $this->name;
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function threads () {
+    return $this->hasMany( Thread::class )
+      ->latest();
   }
 }

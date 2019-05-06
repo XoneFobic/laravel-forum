@@ -1,8 +1,10 @@
-<?php declare( strict_types = 1 );
+<?php
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+/** @noinspection PhpFullyQualifiedNameUsageInspection */
+declare( strict_types = 1 );
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,12 +19,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereFavouritedId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereFavouritedType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereCreatedAt( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereFavouritedId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereFavouritedType( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereUpdatedAt( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Favourite whereUserId( $value )
  * @mixin \Eloquent
  */
 class Favourite extends Model {
