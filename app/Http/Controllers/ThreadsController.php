@@ -25,14 +25,36 @@ class ThreadsController extends Controller {
    *
    * @param \App\Filters\ThreadsFilter $filters
    *
-   * @return \Illuminate\View\View
+   * @return \App\Thread[]|\Illuminate\Contracts\View\Factory|\Illuminate\Database\Eloquent\Collection|\Illuminate\View\View
    */
-  public function index ( Channel $channel, ThreadsFilter $filters ): View {
-    /** @var Thread $threads */
-    $threads = $channel->exists ? $channel->threads()->latest() : Thread::latest();
-    $threads = $threads->filter( $filters )->get();
+  public function index ( Channel $channel, ThreadsFilter $filters ) {
+    $threads = $this->getThreads( $channel, $filters );
+
+    if (request()->wantsJson()) {
+      return $threads;
+    }
 
     return view( 'threads.index', compact( 'threads' ) );
+  }
+
+  /**
+   * Fetch all relevant threads.
+   *
+   * @param \App\Channel $channel
+   * @param \App\Filters\ThreadsFilter $filters
+   *
+   * @return \App\Thread[]|\Illuminate\Database\Eloquent\Collection
+   */
+  private function getThreads ( Channel $channel, ThreadsFilter $filters ) {
+    /** @var \App\Thread $threads */
+    $threads = Thread::latest();
+    $threads = $threads->filter( $filters );
+
+    if ($channel->exists) {
+      $threads->where( 'channel_id', $channel->id );
+    }
+
+    return $threads->get();
   }
 
   /**
@@ -79,7 +101,7 @@ class ThreadsController extends Controller {
     // return view( 'threads.show', compact( 'thread' ) );
     return view( 'threads.show', [
       'thread' => $thread,
-      'replies' => $thread->replies()->paginate(25)
+      'replies' => $thread->replies()->paginate( 25 )
     ] );
   }
 

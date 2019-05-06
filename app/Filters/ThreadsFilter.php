@@ -10,7 +10,7 @@ use App\User;
  * @package App\Filters
  */
 class ThreadsFilter extends Filters {
-  protected $filters = [ 'by' ];
+  protected $filters = [ 'by', 'popular' ];
 
   /**
    * Filter the query by given username
@@ -24,5 +24,16 @@ class ThreadsFilter extends Filters {
     $user = User::where( 'name', $username )->firstOrFail();
 
     return $this->builder->where( 'user_id', $user->id );
+  }
+
+  /**
+   * Sort the query by popularity
+   *
+   * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+   */
+  protected function popular () {
+    $this->builder->getQuery()->orders = [];
+
+    return $this->builder->orderBy( 'replies_count', 'desc' );
   }
 }
