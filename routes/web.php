@@ -15,3 +15,5 @@ Route::group( [ 'prefix' => '/threads' ], function () {
   Route::post( '/', 'ThreadsController@store' );
   Route::post( '/{channel}/{thread}/replies', 'RepliesController@store' );
 } );
+
+Route::post( '/replies/{reply}/favourites', 'FavouritesController@store' );
