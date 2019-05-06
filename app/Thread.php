@@ -41,6 +41,15 @@ class Thread extends Model {
    */
   protected $guarded = [];
 
+  protected static function boot () {
+    parent::boot();
+
+    static::addGlobalScope( 'replyCount', function ( $builder ) {
+      /** @var \Illuminate\Database\Eloquent\Builder $builder */
+      $builder->withCount( 'replies' );
+    } );
+  }
+
   /**
    * Return URL string for a specific thread.
    *
